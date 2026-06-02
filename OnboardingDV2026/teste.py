@@ -13,12 +13,21 @@ def main():
         if not ok:
             break
 
-        # Função que cria a janela onde será transmitido o vídeo.
-        cv2.imshow("Teste de camera", frame)
+        # Espelha o frame
+        frame = cv2.flip(frame, 1)
 
+        # Aplica o filtro preto com contornos brancos
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        edges = cv2.Canny(gray, 100, 200)
+
+        # Função que cria a janela onde será transmitido o vídeo.
+        cv2.imshow("Teste de camera", edges)
+
+        # Quebra o loop da transmissão de vídeo ao apertar "q"
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 
+    # Libera a Webcam
     cap.release()
     cv2.destroyAllWindows()
 
