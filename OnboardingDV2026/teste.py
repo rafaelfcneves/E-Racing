@@ -35,10 +35,14 @@ def main():
             # Uma tupla que contém as coordenadas dos Landmarks
             dados = hands.process(frame_rgb)
 
-
+            # Se identificados os Landmarks:
+            if dados.multi_hand_landmarks:
+                for i in range(len(dados.multi_hand_landmarks)):
+                    hand = dados.multi_hand_landmarks[i]
+                    mp_draw.draw_landmarks(frame_rgb, hand, mp_hands.HAND_CONNECTIONS)
 
             # Aplica o filtro preto com contornos brancos
-            gray = cv2.cvtColor(frame_landmarks, cv2.COLOR_RGB2GRAY)
+            gray = cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2GRAY)
             edges = cv2.Canny(gray, 100, 200)
 
             # Função que cria a janela onde será transmitido o vídeo.
