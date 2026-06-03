@@ -37,6 +37,7 @@ def main():
 
             # Se identificados os Landmarks:
             if dados.multi_hand_landmarks:
+                # Recebe as mãos que estão na tela e as desenha
                 for i in range(len(dados.multi_hand_landmarks)):
                     hand = dados.multi_hand_landmarks[i]
                     mp_draw.draw_landmarks(frame_rgb, hand, mp_hands.HAND_CONNECTIONS)
