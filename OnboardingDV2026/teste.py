@@ -2,7 +2,7 @@ import math
 import cv2
 import mediapipe as mp
 import numpy as np
-import pyautogui
+import pydirectinput
 
 MARGIN = 10
 FONT_SIZE = 1
@@ -17,12 +17,12 @@ class Comando:
     def pressionar(self):
         """Se a tecla não estiver pressionada, a função aperta ela"""
         if not self.pressionada:
-            pyautogui.keyDown(self.tecla)
+            pydirectinput.keyDown(self.tecla)
             self.pressionada = True
     def soltar(self):
         """Se a tecla estiver pressionada, a função solta ela"""
         if self.pressionada:
-            pyautogui.keyUp(self.tecla)
+            pydirectinput.keyUp(self.tecla)
             self.pressionada = False
 
 def obter_coordenadas(frame, dados, mp_hands, mp_draw):
@@ -81,7 +81,7 @@ def desenhar_comando(comando, frame):
     h, width, _ = frame.shape
     cv2.putText(frame,comando,(int(width/2) - 100, 50),cv2.FONT_HERSHEY_SIMPLEX,0.8,COLOR,2,cv2.LINE_AA)
 
-def executar_acao(comando, virar_esquerda, virar_direita, acelerar):
+def executar_acao(comando, virar_esquerda, virar_direita, acelerar, frear):
     if comando != None:
         acelerar.pressionar()
         if comando == "TURN LEFT":
@@ -106,7 +106,7 @@ def main():
     virar_esquerda = Comando(nome="TURN LEFT",tecla='a')
     virar_direita = Comando(nome="TURN RIGHT",tecla='d')
     acelerar = Comando(nome="AHEAD",tecla='w')
-
+    frear = Comando(nome="BREAK",tecla='s')
     # Chamada da WebCam
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
@@ -115,8 +115,8 @@ def main():
     # Evita vazamento de memória caso a aplicação feche
     with mp_hands.Hands(
         max_num_hands=2,
-        min_detection_confidence=0.7,
-        min_tracking_confidence=0.7,
+        min_detection_confidence=0.6,
+        min_tracking_confidence=0.6,    
     ) as hands:
 
     # Loop principal da transmissão de vídeo.
@@ -140,7 +140,7 @@ def main():
             comando = calcular_angulacao(y_left, y_right, x_left, x_right)
             desenhar_comando(comando,frame)
 
-            executar_acao(comando, virar_esquerda, virar_direita, acelerar)
+            executar_acao(comando, virar_esquerda, virar_direita, acelerar, frear)
             # Função que cria a janela onde será transmitido o vídeo.
             cv2.imshow("Teste de camera", frame)
 
