@@ -11,8 +11,19 @@ COLOR = (39, 127, 255)
 
 class Comando:
     def __init__(self, nome, tecla):
-        self.nome = nome
+        self.nome = nome # Nome do comando (TURN RIGHT, TURN LEFT, AHEAD)
         self.tecla = tecla
+        self.pressionada = False # False indica que a tecla não está pressionada
+    def pressionar(self):
+        """Se a tecla não estiver pressionada, a função aperta ela"""
+        if not self.pressionada:
+            pyautogui.keyDown(self.tecla)
+            self.pressionada = True
+    def soltar(self):
+        """Se a tecla estiver pressionada, a função solta ela"""
+        if self.pressionada:
+            pyautogui.keyUp(self.tecla)
+            self.pressionada = False
 
 def obter_coordenadas(frame, dados, mp_hands, mp_draw):
     """
@@ -69,11 +80,7 @@ def desenhar_comando(comando, frame):
     cv2.putText(frame,comando,(int(width/2) - 100, 50),cv2.FONT_HERSHEY_SIMPLEX,0.8,COLOR,2,cv2.LINE_AA)
 
 def executar_acao(comando):
-    tecla = None
-    if comando != None:
-        pyautogui.keyDown('w')
-    else:
-        pyautogui.keyUp('w')
+    
 
 
 def main():
