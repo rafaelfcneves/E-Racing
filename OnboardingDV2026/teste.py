@@ -79,8 +79,22 @@ def desenhar_comando(comando, frame):
     h, width, _ = frame.shape
     cv2.putText(frame,comando,(int(width/2) - 100, 50),cv2.FONT_HERSHEY_SIMPLEX,0.8,COLOR,2,cv2.LINE_AA)
 
-def executar_acao(comando):
-    
+def executar_acao(comando, virar_esquerda, virar_direita, acelerar):
+    if comando != None:
+        acelerar.pressionar()
+        if comando == "TURN LEFT":
+            virar_direita.soltar()
+            virar_esquerda.pressionar()
+        elif comando == "TURN RIGHT":
+            virar_esquerda.soltar()
+            virar_direita.pressionar()
+        elif comando == "AHEAD":
+            virar_direita.soltar()
+            virar_esquerda.soltar()
+    else:
+        acelerar.soltar()
+        virar_direita.soltar()
+        virar_esquerda.soltar()
 
 
 def main():
@@ -123,6 +137,8 @@ def main():
 
             comando = calcular_angulacao(y_left, y_right, x_left, x_right)
             desenhar_comando(comando,frame)
+
+            executar_acao(comando, virar_esquerda, virar_direita, acelerar)
             # Função que cria a janela onde será transmitido o vídeo.
             cv2.imshow("Teste de camera", frame)
 
