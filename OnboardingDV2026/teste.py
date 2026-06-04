@@ -9,6 +9,11 @@ FONT_SIZE = 1
 FONT_THICKNESS = 1
 COLOR = (39, 127, 255)
 
+class Comando:
+    def __init__(self, nome, tecla):
+        self.nome = nome
+        self.tecla = tecla
+
 def obter_coordenadas(frame, dados, mp_hands, mp_draw):
     """
     extrai as coordenadas do começo do dedo do meio (Landmark 9) e desenha os LandMarks.
@@ -45,7 +50,7 @@ def calcular_angulacao(y_left, y_right, x_left, x_right):
     """
     Calcula o ângulo entre as mãos e retorna uma string que diz o comando que tem que ser executado.
     """
-    comando=""
+    comando=None
     if None in (y_left, y_right, x_left, x_right):
         return
     delta_y = y_right - y_left
@@ -63,9 +68,21 @@ def desenhar_comando(comando, frame):
     h, width, _ = frame.shape
     cv2.putText(frame,comando,(int(width/2) - 100, 50),cv2.FONT_HERSHEY_SIMPLEX,0.8,COLOR,2,cv2.LINE_AA)
 
+def executar_acao(comando):
+    tecla = None
+    if comando != None:
+        pyautogui.keyDown('w')
+    else:
+        pyautogui.keyUp('w')
+
+
 def main():
     mp_hands = mp.solutions.hands
     mp_draw = mp.solutions.drawing_utils
+
+    virar_esquerda = Comando(nome="TURN LEFT",tecla='a')
+    virar_direita = Comando(nome="TURN RIGHT",tecla='d')
+    acelerar = Comando(nome="AHEAD",tecla='w')
 
     # Chamada da WebCam
     cap = cv2.VideoCapture(0)
