@@ -1,3 +1,4 @@
+import math
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -11,6 +12,9 @@ def main():
     mp_hands = mp.solutions.hands
     mp_draw = mp.solutions.drawing_utils
     
+    x_esquerda, x_direita, y_esquerda, y_direita = None, None, None, None
+    comando =""
+
     # Chamada da WebCam
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
@@ -51,10 +55,20 @@ def main():
 
                     # Classificar a mão
                     classificacao = dados.multi_handedness[i].classification[0]
-                    lado = classificacao.label
+                    lado = classificacao.label  # Retorna strings "Left" ou "Right"
 
                     # Escrver se é mão esquerda ou direita.
                     height, width, _ = frame_rgb.shape
+                    centro_y = int(lm[9].y * height)
+                    centro_x = int(lm[9].x * width)
+
+                    if lado == "Left":
+                        y_esquerda = centro_y
+                        x_esquerda = centro_x
+                    elif lado == "Right":
+                        y_direita = centro_y
+                        x_direita = centro_x
+
                     coordenadas_x = [landmark.x for landmark in lm]
                     coordenadas_y = [landmark.y for landmark in lm]
                     text_x = int(min(coordenadas_x) * width)    # Coordenada x do texto
@@ -70,6 +84,26 @@ def main():
                         2, 
                         cv2.LINE_AA
                     )
+                if y_esquerda is not None and y_direita is not None and x_esquerda is not None and x_direita is not None:
+                    delta_y = y_direita - y_esquerda
+                    delta_x = x_direita - x_esquerda
+                    tetha = np.arctan2(delta_y, delta_x)
+
+                    if (tetha > 0 and tetha > math.pi / 12):
+                        comando = "TURN RIGHT"
+                    elif (tetha > 0 and tetha < ((11 * math.pi) / 12)):
+                        comando = "TURN LEFTs"
+                    
+                    cv2.putText(
+                            frame,       # Desenhando na sua tela preta
+                            comando,           # O texto "Esquerda" ou "Direita"
+                            (int(width/2) - 100, 50),  # A posição dinâmica que acompanha a mão
+                            cv2.FONT_HERSHEY_SIMPLEX, 
+                            0.8, 
+                            COLOR,       # A cor laranja
+                            2, 
+                            cv2.LINE_AA
+                        )
 
             # Função que cria a janela onde será transmitido o vídeo.
             cv2.imshow("Teste de camera", frame)
