@@ -2,16 +2,45 @@ import math
 import cv2
 import mediapipe as mp
 import numpy as np
+import pyautogui
 
 MARGIN = 10
 FONT_SIZE = 1
 FONT_THICKNESS = 1
 COLOR = (39, 127, 255)
 
+def obter_coordenadas(frame, dados, mp_hands, mp_draw):
+    y_left, y_right, x_left, x_right = None, None, None, None
+    if not dados.multi_hand_landmarks:
+        return y_left, y_right, x_left, x_right
+    height, width, _ = frame.shape
+    # Recebe as mãos que estão na tela e as desenha
+    for i in range(len(dados.multi_hand_landmarks)):
+        hand = dados.multi_hand_landmarks[i]
+        # Lista de tuplas com as coordenadas das landmarks
+        lm = hand.landmark
+        mp_draw.draw_landmarks(frame, hand, mp_hands.HAND_CONNECTIONS)
+        classificacao = dados.multi_handedness[i].classification[0]
+        lado = classificacao.label
+        
+        if lado == "Left":
+            y_left = int(lm[9].y * height)
+            x_left = int(lm[9].x * width)
+        elif lado == "Right":
+            y_right = int(lm[9].y * height)
+            x_right = int(lm[9].x * width)
+
+            coordenadas_x = [landmark.x for landmark in lm]
+            coordenadas_y = [landmark.y for landmark in lm]
+            text_x = int(min(coordenadas_x) * width)    # Coordenada x do texto
+            text_y = int(min(coordenadas_y) * height) - MARGIN   # Coordenada y do texto
+
+            cv2.putText(frame,lado,(text_x, text_y),cv2.FONT_HERSHEY_SIMPLEX, 0.8,COLOR,2, cv2.LINE_AA)
+    return y_left, y_right, x_left, x_right
 def main():
     mp_hands = mp.solutions.hands
     mp_draw = mp.solutions.drawing_utils
-    
+
     x_esquerda, x_direita, y_esquerda, y_direita = None, None, None, None
     comando =""
 
@@ -59,15 +88,13 @@ def main():
 
                     # Escrver se é mão esquerda ou direita.
                     height, width, _ = frame_rgb.shape
-                    centro_y = int(lm[9].y * height)
-                    centro_x = int(lm[9].x * width)
 
                     if lado == "Left":
-                        y_esquerda = centro_y
-                        x_esquerda = centro_x
+                        y_esquerda = int(lm[9].y * height)
+                        x_esquerda = int(lm[9].x * width)
                     elif lado == "Right":
-                        y_direita = centro_y
-                        x_direita = centro_x
+                        y_direita = int(lm[9].y * height)
+                        x_direita = int(lm[9].x * width)
 
                     coordenadas_x = [landmark.x for landmark in lm]
                     coordenadas_y = [landmark.y for landmark in lm]
@@ -89,14 +116,35 @@ def main():
                     delta_x = x_direita - x_esquerda
                     tetha = np.arctan2(delta_y, delta_x)
 
-                    if (tetha > 0 and tetha > math.pi / 12):
+                    if (tetha < 0 and -(math.pi/2) < tetha < -(math.pi/12)):
+                        comando = "TURN LEFT"
+                        cv2.putText(
+                            frame,
+                            comando,           # O texto "Left" ou "Right"
+                            (int(width/2) - 100, 50),  # A posição dinâmica que acompanha a mão
+                            cv2.FONT_HERSHEY_SIMPLEX, 
+                            0.8, 
+                            COLOR,       # A cor laranja
+                            2, 
+                            cv2.LINE_AA
+                        )
+                    elif (tetha > 0 and math.pi/12 < tetha < math.pi/2):
                         comando = "TURN RIGHT"
-                    elif (tetha > 0 and tetha < ((11 * math.pi) / 12)):
-                        comando = "TURN LEFTs"
-                    
-                    cv2.putText(
-                            frame,       # Desenhando na sua tela preta
-                            comando,           # O texto "Esquerda" ou "Direita"
+                        cv2.putText(
+                            frame,
+                            comando,           # O texto "Left" ou "Right"
+                            (int(width/2) - 100, 50),  # A posição dinâmica que acompanha a mão
+                            cv2.FONT_HERSHEY_SIMPLEX, 
+                            0.8, 
+                            COLOR,       # A cor laranja
+                            2, 
+                            cv2.LINE_AA
+                        )
+                    else:
+                        comando = "AHEAD"
+                        cv2.putText(
+                            frame,
+                            comando,           # O texto "Left" ou "Right"
                             (int(width/2) - 100, 50),  # A posição dinâmica que acompanha a mão
                             cv2.FONT_HERSHEY_SIMPLEX, 
                             0.8, 
