@@ -76,6 +76,8 @@ def calcular_angulacao(y_left, y_right, x_left, x_right):
     return comando
 
 def desenhar_comando(comando, frame):
+    if comando is None:
+        return
     h, width, _ = frame.shape
     cv2.putText(frame,comando,(int(width/2) - 100, 50),cv2.FONT_HERSHEY_SIMPLEX,0.8,COLOR,2,cv2.LINE_AA)
 
