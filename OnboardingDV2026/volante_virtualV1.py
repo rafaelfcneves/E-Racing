@@ -10,6 +10,9 @@ FONT_THICKNESS = 1
 COLOR = (39, 127, 255)
 
 class Comando:
+    """
+    Classe para automatizar o pressionar e soltar as teclas com pydirectinput
+    """
     def __init__(self, nome, tecla):
         self.nome = nome # Nome do comando (TURN RIGHT, TURN LEFT, AHEAD)
         self.tecla = tecla
@@ -20,7 +23,7 @@ class Comando:
             pydirectinput.keyDown(self.tecla)
             self.pressionada = True
     def soltar(self):
-        """Se a tecla estiver pressionada, a função solta ela"""
+        """Se a tecla estiver pressionada, a função solta."""
         if self.pressionada:
             pydirectinput.keyUp(self.tecla)
             self.pressionada = False
@@ -82,6 +85,9 @@ def desenhar_comando(comando, frame):
     cv2.putText(frame,comando,(int(width/2) - 100, 50),cv2.FONT_HERSHEY_SIMPLEX,0.8,COLOR,2,cv2.LINE_AA)
 
 def executar_acao(comando, virar_esquerda, virar_direita, acelerar):
+    """
+    Executa as ações do carro. Virar para a esquerda, direita e seguir em frente
+    """
     if comando != None:
         acelerar.pressionar()
         if comando == "TURN LEFT":
@@ -140,7 +146,9 @@ def main():
             comando = calcular_angulacao(y_left, y_right, x_left, x_right)
             desenhar_comando(comando,frame)
 
+            # Executa a ação do volante
             executar_acao(comando, virar_esquerda, virar_direita, acelerar)
+            
             # Função que cria a janela onde será transmitido o vídeo.
             cv2.imshow("Teste de camera", frame)
 
