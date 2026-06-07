@@ -1,3 +1,11 @@
+"""
+Volante virtual - Pressiona e solta teclas do teclado por meio de detecção de mãos
+==================================================================================
+Divisão Driverless - Unicamp E-racing | Onboarding 2026
+
+Sair: pressione 'q' para fechar a janela com a webcam em foco
+"""
+
 import math
 import cv2
 import mediapipe as mp
@@ -108,7 +116,7 @@ def executar_acao(comando, virar_esquerda, virar_direita, acelerar):
 def main():
     mp_hands = mp.solutions.hands
     mp_draw = mp.solutions.drawing_utils
-
+    # Declaração de objetos que contém nome do comando e sua respectiva tecla associada
     virar_esquerda = Comando(nome="TURN LEFT",tecla='a')
     virar_direita = Comando(nome="TURN RIGHT",tecla='d')
     acelerar = Comando(nome="AHEAD",tecla='w')
