@@ -48,4 +48,4 @@ pip install -r requirements.txt
 
 ---
 
-Divisão Driverless — Onboarding Unicamp E-Racing
+Onboarding Divisão Driverless 2026 — Unicamp E-Racing
