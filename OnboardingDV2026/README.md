@@ -12,9 +12,9 @@ Tutorial de como rodar o Volante Virtual no Windows desenvolvido para o Onboardi
 
 ---
 
-### Ambiente Virtual
+### Ambiente Virtual e Execução
 
-Segue-se os passos para criar uma pasta venv e ativar o ambiente virtual no terminal cmd:
+Segue-se os passos para criar uma pasta venv, ativar o ambiente virtual e executar o programa no terminal cmd:
 
 **1. Crie o ambiente virtual dentro da pasta do arquivo:**
 
@@ -33,6 +33,12 @@ venv\Scripts\activate.bat
 
 ```bash
 pip install -r requirements.txt
+```
+
+**4. Executando o programa:**
+
+```bash
+python volante_virtualV1.py
 ```
 
 ---
