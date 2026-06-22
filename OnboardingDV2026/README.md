@@ -4,7 +4,7 @@ Tutorial de como rodar o Volante Virtual no Windows desenvolvido para o Onboardi
 
 ---
 
-## Instalação
+## Instalação do Python
 
 **Versão do Python:** A versão do Python utilizada foi a 3.11.9 e pode ser baixada na [página oficial do Python](https://www.python.org/)
 
