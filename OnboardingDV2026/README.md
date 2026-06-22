@@ -1,4 +1,4 @@
-# Onboarding DV 2026 — Unicamp E-Racing
+# Onboarding DV 2026 — Unicamp E-Racing 🐜⚡🔶
 
 Tutorial de como rodar o Volante Virtual no Windows desenvolvido para o Onboarding 2026 da Unicamp E-Racing.
 
@@ -6,19 +6,24 @@ Tutorial de como rodar o Volante Virtual no Windows desenvolvido para o Onboardi
 
 ## Instalação
 
-### Pré-requisitos
+**Versão do Python:** A versão do Python utilizada foi a 3.11.9 e pode ser baixada na [página oficial do Python](https://www.python.org/)
+
+---
+
+## Pré-requisitos
 
 **Windows:** pip e venv já vêm junto com o Python. Nenhum passo extra necessário.
 
 ---
 
-### Ambiente Virtual e Execução
+## Ambiente Virtual e Execução
 
 Segue-se os passos para criar uma pasta venv, ativar o ambiente virtual e executar o programa no terminal cmd:
 
 **1. Crie o ambiente virtual dentro da pasta do arquivo:**
 
 ```bash
+# Windows (CMD)
 python3 -m venv venv
 ```
 
@@ -32,12 +37,14 @@ venv\Scripts\activate.bat
 **3. Instale as dependências:**
 
 ```bash
+# Windows (CMD)
 pip install -r requirements.txt
 ```
 
 **4. Executando o programa:**
 
 ```bash
+# Windows (CMD)
 python volante_virtualV1.py
 ```
 
