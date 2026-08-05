@@ -18,7 +18,8 @@ O MATLAB é muito utilizado em muitas áreas da Engenharia pela sua alta versati
 - [Algumas Funções Matemáticas e Constantes](#algumas-funções-matemáticas-e-constantes)
 - [Um Pouco Sobre o Editor MATLAB](#um-pouco-sobre-o-editor-matlab)
 - [Vetores e Matrizes](#vetores-e-matrizes)
-- [Fontes](#fontes)
+- [Plotando Vetores](#plotando-vetores)
+- [Materiais de Apoio e Aprofundamento](#materiais-de-apoio-e-aprofundamento)
 
 ## Comandos Básicos
 Para executar comandos básicos basta digitá-los na janela de comando e apertar **Enter**. Os prompts serão indicados por **>>**
@@ -218,7 +219,27 @@ A **Transposição de Matrizes** pode ser combinada com os métodos ":" e linspa
         5
         7
         9
-### Criando Arrays com Funções
+É possível utilizar vetores para criar matrizes, por exemplo
+
+    >> x = [1; 2];
+    >> y = [3; 4];
+    >> z = [x y]                      % Insere-se vetores coluna 2 x 1 para formar uma matriz 2 x 2
+
+    z =
+
+        1     3
+        2     4
+
+    >> a = [1, 2];
+    >> b = [3, 4];                   % Insere-se vetores linha 1 x 2 para formar uma matriz 2 x 2
+    >> c = [a; b]
+
+    c =
+
+        1     2
+        3     4
+    
+### Criando e Manipulando Arrays com Funções
 Para criar uma matriz quadrada de dimensões n x n de números aleatórios utiliza-se o método **rand**
 
     >> x = rand(2);
@@ -237,6 +258,101 @@ Para obter as dimensões de uma matriz pode ser útil aplicar o método **size**
 
           6     11
 
-## Fontes
+    >> [n, m] = size(z)                % Atribuindo as dimensões a variáveis
+
+    n =
+
+        6
+    m =
+
+        11
+A função **max** e **min** no MATLAB serve para encontrar os valores máximo e mínimo em um vetor ou matriz. Além disso, é possível aplicar funções sobre uma matriz executando, assim, esssa função para cada um dos elementos de uma matriz ou vetor e obtendo uma nova matriz com os novos elementos calculados.
+
+    >> xmax = max(V);                                                        % máximo do vetor V
+    >> xmin = max(V);
+    >> S = sin(M);                       % matriz cujos elementos são os senos dos elementos de M
+    
+    >> xmax = max(M);                    % Seja M uma matriz, essa função retorna um vetor linha
+                                         % contendo os maiores elementos de cada coluna
+### Operações Sobre Vetores
+Adicionando um escalar a todos os elementos de um vetor
+
+    >> x = [1, 2, 3];
+    >> y = x + 2
+
+    y
+
+        3     4     5
+Somar arrays requer que eles sejam de mesma ordem, ou seja, ambos devem ser de dimensões n x m. Para somar arrays então faz-se
+
+    >> v1 = [1, 2, 3, 4, 5];                       % 1 x 5
+    >> v2 = [6, 7, 8, 9, 10];                         % 1 x 5
+    >> vs = v1 + v2
+
+    vs =
+
+        7     9     11     13     15
+Multiplicar ou dividir um vetor por um escalar pedem as seguintes notações
+
+    >> A = [4, 7, 3];
+    >> B = 2*A
+
+    B =
+
+        8     14     6
+    
+    >> C = B/4
+
+    C =
+
+        2     3.50     1.50
+O MATLAB suporta dois tipos de multiplicação entre matrizes. O primeiro é a forma tradicional e já formalizada na matemática, em que duas matrizes A e B suportam multiplicação entre si se forem de ordens n x m e m x p respectivamente. Esse processo resulta em uma matriz C de ordem n x p. A outra forma de multiplicar matrizes no MATLAB é multiplicar cada elemento a(ij) da matriz A(n x m) pelo elemento b(ij) da matriz B também n x m. O resultado dessa operação gera uma matriz C de ordem n x m tal que c(ij) = a(ij)*b(ij).
+
+    >> A = [1, 2, 3; 4, 5, 6];                                                       % A(2 x 3)
+    >> B = [9, 8, 7; 6, 5, 4; 3, 2, 1];                                                  % B(3 x 3)
+    >> C = A * B
+
+    C =                                                                                 % C(2 x 3)
+
+        30     24     18
+        84     69     54
+
+    >> D = [6, 5, 4; 3, 2, 1];                                                          % D(2 x 3)
+    >> E = A .* D                       % Utiliza-se o operador ".*" para o segundo tipo de multiplicação
+
+    E =
+
+        6    10    12
+        12   10    6
+
+## Consultando a Documentação de Funções
+O método **doc** abre uma guia que contém a documentação da função seguida do comando doc. Algumas das funções mais utilizadas no MATLAB são: max, min, randi, plot, mean, det e size.
+
+    >> doc plot
+
+## Plotando Gráficos
+### Plotando Vetores
+Pode-se plotar vetores de mesma quantidade de elementos utilizando a função **plot**. Um dos vetores será responsável por atribuir as coordenadas x dos pontos do gráfico e outro pelas coordenadas y. Por fim, dois vetores se combinarão para formar um gráfico contínuo e, por consequência, talvez aproximados em alguns pontos.
+
+    >> vx = [1, 2];
+    >> vy = [2, 4];
+    >> plot(vx, vy)                                 % Plotando uma reta de equação y = 2x
+Plotar somente pontos no gráfico requer um parâmetro adicional na função plot, esse parâmetro indica a cor e o caractere que será exibido no ponto.
+
+    >> plot(vx, vy, "r*")                       % Plota os pontos de vx e vy em forma de um asterisco 
+                                                % (*) vermelho (r referente a red)
+Caso seja preciso ligar esses pontos de uma forma que não seja por uma linha sólida, será preciso informar o tipo de tracejado
+
+    >> plor(vx, vy, "r--*")                     % "--" informa o tipo de tracejado do gráfico
+Para mais formas de estilização consulte [Line Specification](https://www.mathworks.com/help/matlab/ref/plot.html#btzitot_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8). \
+Comparar gráficos é muitas vezes essencial e, portanto, o MATLAB possui recursos para plotar um gráficos em um mesmo plano com o comando **hold on**. O comando hold on plota todos os gráficos abaixo dele no mesmo plano do gráfico que vem logo antes do hold on. Para desativar essa sobreposição basta digitar **hold off**.
+
+    >> plot(x1,y1)                              % Gráfico 1  
+    >> hold on                                  % Plota o gráfico 2 sobre o gráfico 1
+    >> plot(x2,y2)                              % Gráfico 2
+
+## Materiais de Apoio e Aprofundamento
 https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted
-https://www.ime.unicamp.br/~encpos/VIII_EnCPos/Apostila_Matlab.pdf
+https://www.ime.unicamp.br/~encpos/VIII_EnCPos/Apostila_Matlab.pdf \
+https://www.ic.unicamp.br/~rdahab/cursos/matlab/#material_didatico \
+https://mec.ita.br/~adade/Matlab/Web/introduz.htm#Ao%20leitor
