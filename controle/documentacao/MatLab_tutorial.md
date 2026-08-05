@@ -345,11 +345,22 @@ Caso seja preciso ligar esses pontos de uma forma que não seja por uma linha s�
 
     >> plor(vx, vy, "r--*")                     % "--" informa o tipo de tracejado do gráfico
 Para mais formas de estilização consulte [Line Specification](https://www.mathworks.com/help/matlab/ref/plot.html#btzitot_sep_mw_3a76f056-2882-44d7-8e73-c695c0c54ca8). \
+\
 Comparar gráficos é muitas vezes essencial e, portanto, o MATLAB possui recursos para plotar um gráficos em um mesmo plano com o comando **hold on**. O comando hold on plota todos os gráficos abaixo dele no mesmo plano do gráfico que vem logo antes do hold on. Para desativar essa sobreposição basta digitar **hold off**.
 
     >> plot(x1,y1)                              % Gráfico 1  
     >> hold on                                  % Plota o gráfico 2 sobre o gráfico 1
     >> plot(x2,y2)                              % Gráfico 2
+Plotar apenas um vetor retorna um gráfico que contém cada elemento do vetor no eixo y enquanto o eixo x representa a quantidade de números daquele vetor.
+
+    >> plot(v1)
+
+Para aumentar a espessura do gráfico é necessário acrescentar o parâmetro **LineWidth=x** sendo x a espessura desejada
+
+    >> plot(v1,"y--o",LineWidth=3)               % gráfico de v1 amarelo com linha tracejada e espessura 3
+### Fazendo Anotações
+
+
 
 ## Materiais de Apoio e Aprofundamento
 https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted
