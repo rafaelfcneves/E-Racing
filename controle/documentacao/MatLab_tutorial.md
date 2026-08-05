@@ -172,6 +172,28 @@ Criar uma matriz exige combinar os dois tipos de vetores. Para criar uma matriz 
     >> A = [3^2, 5/2, 8];
     >> B=[6,11,4.5,1];
 
+### Index em Arrays
+Em MATLAB, diferente de outras liguagens de programação tradicionais como Python e C, os index de um vetor começam a partir do número 1 e não do 0. Dado um vetor v para extrair o n-ésimo elemento,
+
+    >> elemento_n = v(n);
+    >> ultimo_elemento = v(end);                  % passar end como index acessa o último elemento da lista
+    >> elemento_i_j = matriz(i, j);               % Extrai o elemento i,j de uma matriz
+Caso apenas uma variável n seja passada como parâmetro para uma matriz, MATLAB retorná o n-ésimo elemento de começando a contar de cima para baixo da primeira coluna. \
+\
+Para obter uma coluna/lihna inteira emprega-se ":" como um dos parâmetros sobre uma matriz
+
+    >> linha = matriz(i, :);                     % vetor que contém todos os elementos da linha i
+    >> coluna = matriz(:, j);                    % vetor que contém todos os elementos da coluna j
+    >> linha = matriz(i:k,:);                    % vetor que contém todos os elementos das linha i até a linha k
+    >> coluna = matriz(:,j:k);                 % vetor que contém todos os elementos das coluna j até a coluna k
+Obter múltiplos elementos bem selecionados de um vetor é recomendado aplicar
+
+    >> [elemento_a, elemento_b] = vetor([a b])   % Sendo a e b os idx dos elementos
+Mudar um elemento de um index específico lembra a sintaxe de outras liguagens de alto nível como Python
+
+    >> vetor(n) = 0.5;
+    >> matriz(i, j) = 9.6;
+
 ### Métodos para Criação de Vetores
 Para criar um vetor linha que começa em um número n e vai até p de um em um basta utilizar o operador ":"
 
@@ -358,7 +380,105 @@ Plotar apenas um vetor retorna um gráfico que contém cada elemento do vetor no
 Para aumentar a espessura do gráfico é necessário acrescentar o parâmetro **LineWidth=x** sendo x a espessura desejada
 
     >> plot(v1,"y--o",LineWidth=3)               % gráfico de v1 amarelo com linha tracejada e espessura 3
-### Fazendo Anotações
+### Fazendo Anotações nos Gráficos
+O título de um gráfico tem extrema importância, pois é geralmenete ele que está dizendo o que está sendo analisado. Para escrever o título de um gráfico, é necessário utilizar a função **title** e colocar o título entre aspas. É possível concatenar strings dentro da função título permitindo juntar strings com uma variável.
+
+    >> title("Meu Gráfico")
+    >> title("Meu Gráfico nº " + num_experimento)
+
+Para nomear os eixos é preciso utilizar as funções **xlabel** e **ylabel**.
+
+    >> xlabel("Tempo (s)")                               % Eixo x nomeado como Tempo (s)
+    >> ylabel("Posição (m)")                             % Eixo y nomeado como Posição (m)
+
+Legendas podem ser feitas com a função **legend**
+
+    >> Legend("Experimento A", "Experimento B")
+
+## Extraindo Dados de Tabelas
+MATLAB possui suporte para tabelas e é possível obter os dados registrados nessas tabelas. Para obter um dado e armazená-lo em uma variável faz-se
+
+    >> variavel = nome_tabela.nome_coluna               % Cria um vetor que contém os dados de toda a coluna
+### Modificando/Adicionando Dados em Tabelas
+Modificar um dado ou adicioná-lo exige o mesmo processo. Se a variável que está recebendo uma atribuição não existe naquela tabela, ela será adicionada, caso exista, será apenas modificada.
+
+    >> nome_tabela.nome_da_coluna = valor
+Para extrair uma linha usa-se
+
+    >> variavel = nome_tabela(linha_inicial:linha_final,:)        % Se desejar exibir uma coluna j deve-se
+                                                                  % colocar o número j no lugar do último
+                                                                  % parâmetro. Os dois pontos extraem todas as colunas
+
+## Arrays Lógicos
+Os valores booleanos/lógicos, são valores que resultam de comparações. Assim como na linguagem C, MATLAB não apresenta um tipo booleano, em vez disso adota 0 para **false** e 1 para **true**. Assim qualquer operação lógica como >, <, >=, <=, ==, ~= (equivalente ao != do C) irá retornar 1 ou 0.
+### Operações Lógicas Sobre Arrays
+É possível realizar operações lógicas entre um array e um escalar, o resultado disso será um array que contém somente 0 ou 1, os quais são resultados de comparações entre cada um dos elementos e o escalar escolhido.
+
+    >> v = [1,2,3];                     % isso vale para todos os operadores lógicos listados anteriormente
+    >> y = v > 2
+
+    y =
+
+        0     0     1
+### Operadores AND, OR e NOT
+Os operadores **AND, OR e NOT** já são bem famosos na computação, mas mesmo já bem consolidados, sempre vale a pena uma revisão. Lembrando que em MATLAB os operadores AND, OR e NOT são escritos como **&, | e ~** respectivamente
+### Operador & (AND)
+| A | B | A & B |
+|------------|------------|-----------|
+| 1 | 1 | 1 |
+| 1 | 0 | 0 |
+| 0 | 1 | 0 |
+| 0 | 0 | 0 |
+
+### Operador | (OR)
+| A | B | A \| B |
+|------------|------------|-----------|
+| 1 | 1 | 1 |
+| 1 | 0 | 1 |
+| 0 | 1 | 1 |
+| 0 | 0 | 0 |
+
+### Operador ~ (NOT)
+| A | ~A |
+|------------|------------|
+| 1 | 0 |
+| 0 | 1 |
+
+### Index Lógico
+Foi visto que é possível criar um vetor lógico a partir de operadores comparativos. Porém não foi visto que vetores lógicos podem ser passados como index para o vetor que criou o vetor lógico. Ao fazer isso, extrai-se os elementos do vetor que indexamente correspondem a 1 (true) para um outro vetor que armazena esses dados.
+
+    >> vetor1 = [3,5,7];
+    >> eh_maior = vetor1 > 4                          % Cria-se o vetor lógico
+
+    eh_maior =
+
+                0     1     1
+
+    >> vetor2 = vetor1(eh_maior)                         % Vetor lógico como index
+
+    vetor2 =
+
+                5     7
+Esse processo todo, no final, pode ser reduzido para
+
+    >> vetor2 = vetor1(vetor1 > 4);
+É possível aplicar para outro vetor 3,
+
+    >> vetor3 = [9, 5, 14];
+    >> U = vetor3(vetor1 > 4)
+
+    U =                  % retorna 5 e 14 porque são os números indexamente correspondentes a 1 no vetor lógico
+
+        5     14
+Outra aplicação de index lógicos é utilizar para reatribuir valores a vetor original
+
+    >> v1 = [9,1,4];
+    >> v1(v1 < 6) = 8                          % Todos os valores de v1 que indexamente corresponderem a 1 no
+                                               % vetor lógico, receberão valor 8
+    v1 =
+
+         9     8     8                         % Os elementos 1 e 4 retornam 1 (true) para a condição dada
+Obs: foram utilizados apenas vetores para demonstrar algumas dessas propriedades, mas vale ressaltar que elas são válidas para qualquer tipo de matriz e aplicação se dá de forma identica.
 
 
 
