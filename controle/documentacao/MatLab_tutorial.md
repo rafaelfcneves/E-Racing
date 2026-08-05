@@ -18,7 +18,11 @@ O MATLAB é muito utilizado em muitas áreas da Engenharia pela sua alta versati
 - [Algumas Funções Matemáticas e Constantes](#algumas-funções-matemáticas-e-constantes)
 - [Um Pouco Sobre o Editor MATLAB](#um-pouco-sobre-o-editor-matlab)
 - [Vetores e Matrizes](#vetores-e-matrizes)
-- [Plotando Vetores](#plotando-vetores)
+- [Plotando Gráficos](#plotando-gráficos)
+- [Extraindo Dados de Tabelas](#extraindo-dados-de-tabelas)
+- [Arrays Lógicos](#arrays-lógicos)
+- [Instruções Condicionais](#instruções-condicionais)
+- [Laços de Repetição](#laços-de-repetição)
 - [Materiais de Apoio e Aprofundamento](#materiais-de-apoio-e-aprofundamento)
 
 ## Comandos Básicos
@@ -296,6 +300,10 @@ A função **max** e **min** no MATLAB serve para encontrar os valores máximo e
     
     >> xmax = max(M);                    % Seja M uma matriz, essa função retorna um vetor linha
                                          % contendo os maiores elementos de cada coluna
+A função **length** retorna o tamanho/quantidade de elementos de um vetor
+
+    >> t = length(vetor);
+
 ### Operações Sobre Vetores
 Adicionando um escalar a todos os elementos de um vetor
 
@@ -480,10 +488,31 @@ Outra aplicação de index lógicos é utilizar para reatribuir valores a vetor 
          9     8     8                         % Os elementos 1 e 4 retornam 1 (true) para a condição dada
 Obs: foram utilizados apenas vetores para demonstrar algumas dessas propriedades, mas vale ressaltar que elas são válidas para qualquer tipo de matriz e aplicação se dá de forma identica.
 
+## Instruções Condicionais
+As estruturas condicionais tem grande relevância na computação. Quando um resultado depende de valores de variáveis, então é preciso aplicar algumas estruturas condicionais para moldar nosso código conforme o problema computacional. Os comandos **if/else** são os responsáveis por isso, eles realizam testes lógicos e, se o teste da condição if funciona, retorna 1 e executa o bloco de código da condição if, do contrário, executa o bloco else. A sintaxe para **if/else** em MATLAB é,
 
+    >> if idade >= 18
+           disp("Você pode beber e dirigir")
+       else
+           disp("Você só não pode dirigir")
+       end
+O comando **end** é obrigatório para encerrar o bloco de decisão. Também, caso haja uma três ou mais cláusulas de decisão, utiliza-se o comando **elseif** para todos os blocos condicionais que não sejam os primeiros. A função **disp** vem de "display" e tem a mesma função que o print do Python, printf do C, cout do C++, etc.
+
+## Laços de Repetição
+Quando é preciso executar uma mesma instrução mais uma vez é recomendado utilizar estruturas conhecidas como loops. Cada execução do loop é chamada de iteração e ela pode ser de dois tipos: iteração condicional e iteração limitada. A iteração condicional é realizada com o auxílio do comando **while** que realiza um teste lógico toda vez antes de executar seu bloco de código. Enquanto a condição proposta no bloco while for verdadeira, o loop continua, mas no momento que o teste lógico for falso, o loop se quebra. Já a iteração limitada tem uma quantidade pré-definida de vezes em que ela será executada e ela é acompanhada pelo comando **for** e pode ser muito útil para percorrer elementos de um vetor. A sintaxe para esses dois comandos em MATLAB é,
+
+    >> n = 1;
+    >> while n < 5
+           disp(n)
+           n++;
+       end
+    
+    >> for i 1:5
+           disp(i)
+       end
 
 ## Materiais de Apoio e Aprofundamento
-https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted
+https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted \
 https://www.ime.unicamp.br/~encpos/VIII_EnCPos/Apostila_Matlab.pdf \
 https://www.ic.unicamp.br/~rdahab/cursos/matlab/#material_didatico \
 https://mec.ita.br/~adade/Matlab/Web/introduz.htm#Ao%20leitor
