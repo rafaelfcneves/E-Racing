@@ -367,7 +367,8 @@ Pode-se plotar vetores de mesma quantidade de elementos utilizando a função **
     >> vx = [1, 2];
     >> vy = [2, 4];
     >> plot(vx, vy)                                 % Plotando uma reta de equação y = 2x
-Plotar somente pontos no gráfico requer um parâmetro adicional na função plot, esse parâmetro indica a cor e o caractere que será exibido no ponto.
+### Plotando Pontos
+Plotar somente pontos no gráfico requer que os parâmetros sejam escalares na função plot.
 
     >> plot(vx, vy, "r*")                       % Plota os pontos de vx e vy em forma de um asterisco 
                                                 % (*) vermelho (r referente a red)
