@@ -18,6 +18,7 @@ O MATLAB é muito utilizado em muitas áreas da Engenharia pela sua alta versati
 - [Algumas Funções Matemáticas e Constantes](#algumas-funções-matemáticas-e-constantes)
 - [Um Pouco Sobre o Editor MATLAB](#um-pouco-sobre-o-editor-matlab)
 - [Vetores e Matrizes](#vetores-e-matrizes)
+- [Fontes](#fontes)
 
 ## Comandos Básicos
 Para executar comandos básicos basta digitá-los na janela de comando e apertar **Enter**. Os prompts serão indicados por **>>**
@@ -235,3 +236,7 @@ Para obter as dimensões de uma matriz pode ser útil aplicar o método **size**
     ans =
 
           6     11
+
+## Fontes
+https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted
+https://www.ime.unicamp.br/~encpos/VIII_EnCPos/Apostila_Matlab.pdf
